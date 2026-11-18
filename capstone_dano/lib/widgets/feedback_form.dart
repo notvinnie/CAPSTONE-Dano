@@ -20,7 +20,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
   final _formKey = GlobalKey<FormState>();
   final _comment = TextEditingController();
   String? _target;
-  int _rating = 0;
+  double _rating = 0;
   int _formVersion = 0;
   bool _ratingMissing = false;
   bool _sent = false;
@@ -71,7 +71,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
             DropdownButtonFormField<String>(
               key: ValueKey(_formVersion),
               isExpanded: true,
-              value: _target,
+              initialValue: _target,
               hint: const Text('Choose one'),
               items: widget.targets.map((t) => DropdownMenuItem(value: t.name, child: Text(t.name))).toList(),
               onChanged: (v) => setState(() => _target = v),

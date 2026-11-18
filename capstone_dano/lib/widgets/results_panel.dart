@@ -60,7 +60,7 @@ class ResultsPanel extends StatelessWidget {
 
     for (final target in targets) {
       final mine = ratings.where((r) => r.target == target.name).toList();
-      final total = mine.fold<int>(0, (sum, r) => sum + r.stars);
+      final total = mine.fold<double>(0, (sum, r) => sum + r.stars);
       final average = mine.isEmpty ? 'No ratings' : '${(total / mine.length).toStringAsFixed(1)} / 5';
       rows.add(_row(_nameCell(target), '${mine.length}', average, empty: mine.isEmpty));
     }
