@@ -1,41 +1,70 @@
 import 'package:flutter/material.dart';
 
+import '../models/rating.dart';
+import '../models/target.dart';
 import 'app_theme.dart';
 import 'panel.dart';
 
 class ResultsPanel extends StatelessWidget {
-  const ResultsPanel({super.key});
+  const ResultsPanel({super.key, required this.targets, required this.ratings});
 
-  static const List<List<String>> _rows = [
-    ['Ms. Reyes - Mathematics', '2', '4.5 / 5'],
-    ['Mr. Santos - Science', '2', '3.5 / 5'],
-    ['Ms. Cruz - English', '2', '5.0 / 5'],
-    ['Foundation Day', '2', '3.5 / 5'],
-    ['Career Fair', '2', '3.5 / 5'],
-  ];
+  final List<Target> targets;
+  final List<Rating> ratings;
 
-  TableRow _row(List<String> values, {bool header = false}) {
+  TableRow _row(Widget first, String count, String average, {bool header = false, bool empty = false}) {
     final base = TextStyle(
       fontWeight: header ? FontWeight.w600 : FontWeight.w400,
       color: header ? muted : ink,
       fontSize: header ? 14 : 15,
     );
-    final averageStyle = header ? base : base.copyWith(fontWeight: FontWeight.w700);
+    final averageStyle = header
+        ? base
+        : empty
+            ? base.copyWith(color: muted)
+            : base.copyWith(fontWeight: FontWeight.w700);
 
-    Widget cell(String text, TextAlign align, TextStyle style) => Padding(
+    Widget pad(Widget child) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 6),
-          child: Text(text, textAlign: align, style: style),
+          child: child,
         );
 
+    Widget text(String value, TextStyle style) => pad(Text(value, textAlign: TextAlign.right, style: style));
+
     return TableRow(children: [
-      cell(values[0], TextAlign.left, base),
-      cell(values[1], TextAlign.right, base),
-      cell(values[2], TextAlign.right, averageStyle),
+      pad(first),
+      text(count, base),
+      text(average, averageStyle),
     ]);
+  }
+
+  Widget _nameCell(Target target) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(target.name, style: const TextStyle(color: ink, fontSize: 15)),
+        Text(target.type, style: const TextStyle(color: muted, fontSize: 12)),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final rows = <TableRow>[
+      _row(
+        const Text('Teacher or event', style: TextStyle(color: muted, fontSize: 14, fontWeight: FontWeight.w600)),
+        'Responses',
+        'Average',
+        header: true,
+      ),
+    ];
+
+    for (final target in targets) {
+      final mine = ratings.where((r) => r.target == target.name).toList();
+      final total = mine.fold<int>(0, (sum, r) => sum + r.stars);
+      final average = mine.isEmpty ? 'No ratings' : '${(total / mine.length).toStringAsFixed(1)} / 5';
+      rows.add(_row(_nameCell(target), '${mine.length}', average, empty: mine.isEmpty));
+    }
+
     return Panel(
       title: 'Average ratings',
       child: Table(
@@ -48,10 +77,7 @@ class ResultsPanel extends StatelessWidget {
           horizontalInside: BorderSide(color: line),
           bottom: BorderSide(color: line),
         ),
-        children: [
-          _row(['Teacher or event', 'Responses', 'Average'], header: true),
-          ..._rows.map(_row),
-        ],
+        children: rows,
       ),
     );
   }

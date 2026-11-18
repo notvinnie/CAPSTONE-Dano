@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'data/dummy_data.dart';
+import 'models/rating.dart';
 import 'widgets/app_theme.dart';
 import 'widgets/feedback_form.dart';
 import 'widgets/results_panel.dart';
@@ -20,8 +22,19 @@ class FeedbackApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Rating> _ratings = [...sampleRatings];
+
+  void _addRating(Rating rating) {
+    setState(() => _ratings.add(rating));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,21 +60,24 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   LayoutBuilder(builder: (context, box) {
+                    final form = FeedbackForm(targets: targets, onSubmit: _addRating);
+                    final results = ResultsPanel(targets: targets, ratings: _ratings);
+
                     if (box.maxWidth >= 760) {
-                      return const Row(
+                      return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(child: FeedbackForm()),
-                          SizedBox(width: 24),
-                          Expanded(child: ResultsPanel()),
+                          Expanded(child: form),
+                          const SizedBox(width: 24),
+                          Expanded(child: results),
                         ],
                       );
                     }
-                    return const Column(
+                    return Column(
                       children: [
-                        FeedbackForm(),
-                        SizedBox(height: 24),
-                        ResultsPanel(),
+                        form,
+                        const SizedBox(height: 24),
+                        results,
                       ],
                     );
                   }),

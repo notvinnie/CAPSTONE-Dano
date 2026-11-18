@@ -1,17 +1,34 @@
 # capstone_dano
 
-A new Flutter project.
+# Project title
 
-## Getting Started
+Student Evaluation Form
 
-This project is a starting point for a Flutter application.
+## Name
 
-A few resources to get you started if this is your first Flutter project:
+Vinnie Paul T. Dano
+Workstation #09
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Project Description
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A Student Feedback / Evaluation Form that allows students to anonymously submit ratings and comments about a teacher or event.
+
+The system allows users to:
+- Fill out an evaluation form using star ratings.
+- Submit comments and feedback anonymously.
+- View the average ratings submitted by students.
+
+## Core Features
+
+- Star-based rating system.
+- Anonymous feedback submission.
+- Comment submission.
+- Average rating display.
+
+## Project Scope
+
+- Only one evaluation type.
+- Anonymous submissions only.
+- No admin dashboard.
+- Displays raw average ratings only.
+
