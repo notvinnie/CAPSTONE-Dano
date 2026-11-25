@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/rating_screen.dart';
+import 'data/rating_service.dart';
+import 'screens/home_screen.dart';
 import 'widgets/app_theme.dart';
 
 void main() => runApp(const FeedbackApp());
@@ -14,7 +15,7 @@ class FeedbackApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Student Feedback',
       theme: buildTheme(),
-      home: const RatingScreen(),
+      home: HomeScreen(service: RatingService()),
     );
   }
 }

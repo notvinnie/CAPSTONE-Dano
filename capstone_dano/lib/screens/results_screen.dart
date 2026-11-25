@@ -27,7 +27,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   void _reload() {
-  setState(() {
+    setState(() {
       _future = widget.service.fetchAll();
     });
   }
@@ -131,7 +131,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   const SizedBox(height: 20),
                   FilledButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Leave a rating'),
+                    child: const Text('Back to home'),
                   ),
                 ],
               ),

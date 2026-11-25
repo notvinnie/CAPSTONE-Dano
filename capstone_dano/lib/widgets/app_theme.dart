@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color blue = Color(0xFF1D4ED8);
+const Color blueTint = Color(0xFFE8EEFC);
 const Color starOn = Color(0xFFF5B301);
 const Color starOff = Color(0xFFCFD5E3);
 const Color ink = Color(0xFF14213D);
