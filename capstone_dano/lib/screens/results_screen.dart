@@ -27,7 +27,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   void _reload() {
-    setState(() => _future = widget.service.fetchAll());
+  setState(() {
+      _future = widget.service.fetchAll();
+    });
   }
 
   void _showError() {
