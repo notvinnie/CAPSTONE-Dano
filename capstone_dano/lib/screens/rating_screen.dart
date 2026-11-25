@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/dummy_data.dart';
-import '../models/rating.dart';
+import '../data/rating_service.dart';
 import '../widgets/app_theme.dart';
 import '../widgets/feedback_form.dart';
 import 'results_screen.dart';
@@ -14,15 +14,11 @@ class RatingScreen extends StatefulWidget {
 }
 
 class _RatingScreenState extends State<RatingScreen> {
-  final List<Rating> _ratings = [...sampleRatings];
-
-  void _addRating(Rating rating) {
-    setState(() => _ratings.add(rating));
-  }
+  final _service = RatingService();
 
   void _openResults() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => ResultsScreen(ratings: _ratings)),
+      MaterialPageRoute(builder: (_) => ResultsScreen(service: _service)),
     );
   }
 
@@ -51,7 +47,7 @@ class _RatingScreenState extends State<RatingScreen> {
                   const SizedBox(height: 16),
                   OutlinedButton(onPressed: _openResults, child: const Text('View averages')),
                   const SizedBox(height: 24),
-                  FeedbackForm(targets: targets, onSubmit: _addRating),
+                  FeedbackForm(targets: targets, onSubmit: _service.add),
                 ],
               ),
             ),
